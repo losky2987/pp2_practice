@@ -1,17 +1,14 @@
 package losky2987.pp2_practice.controller;
 
-import jakarta.validation.Valid;
 import losky2987.pp2_practice.config.AdminOnly;
 import losky2987.pp2_practice.domain.Gate;
 import losky2987.pp2_practice.dto.GateInfoUpdateForm;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.time.LocalTime;
 
 @Controller
@@ -25,7 +22,7 @@ public class AdminController {
     }
 
     @GetMapping("/{userId}")
-    public String adminIndex(@PathVariable("userId") String userId, Model model, @AuthenticationPrincipal OAuth2User principal) {
+    public String adminIndex(@PathVariable("userId") String userId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gateExists", false);
         return "admin";
