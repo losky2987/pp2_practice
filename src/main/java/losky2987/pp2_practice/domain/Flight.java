@@ -8,8 +8,8 @@ import java.util.Objects;
 @Table
 public class Flight {
     private final String number;
-    private final String destination;
-    private final LocalTime departureTime;
+    private String destination;
+    private LocalTime departureTime;
 
     public Flight(String number, String destination, LocalTime departureTime) {
         this.number = number;
@@ -54,6 +54,14 @@ public class Flight {
 
     public LocalTime getDepartureTime() {
         return departureTime;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public void setDepartureTime(LocalTime departureTime) {
+        this.departureTime = departureTime;
     }
 
     @Override
