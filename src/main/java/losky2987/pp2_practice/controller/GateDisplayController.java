@@ -1,0 +1,22 @@
+package losky2987.pp2_practice.controller;
+
+import losky2987.pp2_practice.domain.Gate;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalTime;
+
+@Controller
+@RequestMapping("/gate/")
+public class GateDisplayController {
+    @GetMapping("/{number}")
+    public String display(@PathVariable("number") String number, Model model) {
+        Gate gate = new Gate.GateBuilder().setNumber(number).setFlightNumber("CA986")
+                .setBoardingTime(LocalTime.of(11,46)).build();
+        model.addAttribute("gate", gate);
+        return "gate_display";
+    }
+}

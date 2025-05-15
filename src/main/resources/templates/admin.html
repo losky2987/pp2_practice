@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div>
+    <form method="post" th:action="@{/admin/{userId}/search(userId=${userId})}">
+        <label for="gateNumber">Gate Number: </label>
+        <input type="text" name="gateNumber" id="gateNumber">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div th:if="${gateExists}">
+    <form method="post" th:object="${gateInfoUpdateForm}" th:action="@{/admin/{userId}/edit(userId=${userId})}">
+        <span id="number" th:text="${gate.number}">G01</span>
+        <input type="hidden" name="gateNumber" th:value="${gate.number}">
+        <label for="flightNumber">New flight number: </label>
+        <input type="text" name="flightNumber" id="flightNumber" th:value="${gate.flightNumber}" th:placeholder="${gate.flightNumber}">
+        <label for="boardingTime">New boarding time: </label>
+        <input type="time" step="60" name="boardingTime" id="boardingTime" th:value="${gate.boardingTime}" th:placeholder="${gate.boardingTime}">
+        <button type="submit">Edit</button>
+    </form>
+</div>
+</body>
+</html>
