@@ -1,6 +1,7 @@
 package losky2987.pp2_practice.controller;
 
 import losky2987.pp2_practice.config.AdminOnly;
+import losky2987.pp2_practice.domain.Flight;
 import losky2987.pp2_practice.domain.Gate;
 import losky2987.pp2_practice.dto.GateInfoUpdateForm;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 @AdminOnly
@@ -32,7 +34,7 @@ public class AdminController {
     public String searchResult(@PathVariable("userId") String userId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gateExists", true);
-        Gate gate = new Gate.GateBuilder().setNumber("G01").setFlightNumber("SD111").setBoardingTime(LocalTime.of(12,44)).build();
+        Gate gate = new Gate.GateBuilder().setNumber("G01").setFlights(List.of(new Flight.FlightBuilder().setNumber("CA99").setDestination("Hongkong").setDepartureTime(LocalTime.of(11,33 )).build())).build();
         model.addAttribute("gate", gate);
         return "admin";
     }

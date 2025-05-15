@@ -1,8 +1,11 @@
 package losky2987.pp2_practice.domain;
 
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
+@Table
 public class Flight {
     private final String number;
     private final String destination;

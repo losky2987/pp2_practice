@@ -1,39 +1,35 @@
 package losky2987.pp2_practice.domain;
 
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 
+@Table
 public class Gate {
     private final String number;
-    private final String flightNumber;
-    private final LocalTime boardingTime;
+    private final List<Flight> flights;
 
-    public Gate(String number, String flightNumber, LocalTime boardingTime) {
+    public Gate(String number, List<Flight> flights) {
         this.number = number;
-        this.flightNumber = flightNumber;
-        this.boardingTime = boardingTime;
+        this.flights = flights;
     }
 
     private Gate(GateBuilder gateBuilder) {
         this.number = gateBuilder.number;
-        this.flightNumber = gateBuilder.flightNumber;
-        this.boardingTime = gateBuilder.boardingTime;
+        this.flights = gateBuilder.flights;
     }
 
     public static class GateBuilder {
         private String number;
-        private String flightNumber;
-        private LocalTime boardingTime;
+        private List<Flight> flights;
         public GateBuilder setNumber(String number) {
             this.number = number;
             return this;
         }
-        public GateBuilder setFlightNumber(String flightNumber) {
-            this.flightNumber = flightNumber;
-            return this;
-        }
-        public GateBuilder setBoardingTime(LocalTime boardingTime) {
-            this.boardingTime = boardingTime;
+        public GateBuilder setFlights(List<Flight> flights) {
+            this.flights = flights;
             return this;
         }
         public Gate build() {
@@ -45,32 +41,27 @@ public class Gate {
         return number;
     }
 
-    public String getFlightNumber() {
-        return flightNumber;
-    }
-
-    public LocalTime getBoardingTime() {
-        return boardingTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Gate{" +
-                "number='" + number + '\'' +
-                ", flightNumber='" + flightNumber + '\'' +
-                ", boardingTime=" + boardingTime +
-                '}';
+    public List<Flight> getFlights() {
+        return flights;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Gate gate = (Gate) o;
-        return Objects.equals(number, gate.number) && Objects.equals(flightNumber, gate.flightNumber) && Objects.equals(boardingTime, gate.boardingTime);
+        return Objects.equals(number, gate.number) && Objects.equals(flights, gate.flights);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, flightNumber, boardingTime);
+        return Objects.hash(number, flights);
+    }
+
+    @Override
+    public String toString() {
+        return "Gate{" +
+                "number='" + number + '\'' +
+                ", flights=" + flights +
+                '}';
     }
 }
