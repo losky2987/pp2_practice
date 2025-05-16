@@ -2,7 +2,7 @@ package losky2987.pp2_practice.service;
 
 import jakarta.validation.constraints.NotNull;
 import losky2987.pp2_practice.domain.Admin;
-import losky2987.pp2_practice.domain_repo.AdminRepo;
+import losky2987.pp2_practice.repository.AdminRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

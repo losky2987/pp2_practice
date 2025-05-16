@@ -1,4 +1,4 @@
-package losky2987.pp2_practice.domain_repo;
+package losky2987.pp2_practice.repository;
 
 import losky2987.pp2_practice.db.FlightDB;
 import losky2987.pp2_practice.domain.Flight;

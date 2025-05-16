@@ -1,14 +1,17 @@
 package losky2987.pp2_practice.domain;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Table
 public class Gate {
     private final String number;
+    @Transient
     private final List<Flight> flights;
 
     public Gate(String number, List<Flight> flights) {
@@ -63,5 +66,25 @@ public class Gate {
                 "number='" + number + '\'' +
                 ", flights=" + flights +
                 '}';
+    }
+
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
+
+    public void removeFlight(Flight flight) {
+        flights.remove(flight);
+    }
+
+    public void addAllFlights(List<Flight> flights) {
+        this.flights.addAll(flights);
+    }
+
+    public void removeAllFlights(List<Flight> flights) {
+        this.flights.removeAll(flights);
+    }
+
+    public boolean isFlightAdded(Flight flight) {
+        return flights.contains(flight);
     }
 }

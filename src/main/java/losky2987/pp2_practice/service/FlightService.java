@@ -1,7 +1,7 @@
 package losky2987.pp2_practice.service;
 
 import losky2987.pp2_practice.domain.Flight;
-import losky2987.pp2_practice.domain_repo.FlightRepo;
+import losky2987.pp2_practice.repository.FlightRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
