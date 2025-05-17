@@ -1,6 +1,7 @@
 package losky2987.pp2_practice.service;
 
 import losky2987.pp2_practice.domain.Flight;
+import losky2987.pp2_practice.dto.FlightInfo;
 import losky2987.pp2_practice.repository.FlightRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,14 @@ public class FlightService {
 
     public List<Flight> getFlightsHasSameDestination(String destination) {
         return flightRepo.findFlightsByDestination(destination);
+    }
+
+    public Flight findFlightByNumber(String number) {
+        return flightRepo.findFlightByNumber(number);
+    }
+
+    public Flight updateFlightInfo(FlightInfo flightInfo) {
+        return updateFlight(flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime());
     }
 
     //feature: update flight info

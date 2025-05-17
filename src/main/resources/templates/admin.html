@@ -5,23 +5,63 @@
     <title>Admin</title>
 </head>
 <body>
+<div th:if="${errorAlert}">
+    <small th:text="${errorAlertMsg}"></small>
+</div>
+<div th:if="${tipBox}">
+    <small th:text="${tipBoxMsg}"></small>
+</div>
 <div>
-    <form method="post" th:action="@{/admin/search}">
+    <form method="post" th:action="@{/admin/gate/search}">
         <label for="gateNumber">Gate Number: </label>
         <input type="text" name="gateNumber" id="gateNumber">
         <button type="submit">Search</button>
     </form>
 </div>
-<div th:if="${gateExists}">
-<!--    <form method="post" th:object="${gateInfoUpdateForm}" th:action="@{/admin/edit}">-->
-<!--        <span id="number" th:text="${gate.number}">G01</span>-->
-<!--        <input type="hidden" name="gateNumber" th:value="${gate.number}">-->
-<!--        <label for="flightNumber">New flight number: </label>-->
-<!--        <input type="text" name="flightNumber" id="flightNumber" th:value="${gate.flightNumber}" th:placeholder="${gate.flightNumber}">-->
-<!--        <label for="boardingTime">New boarding time: </label>-->
-<!--        <input type="time" step="60" name="boardingTime" id="boardingTime" th:value="${gate.boardingTime}" th:placeholder="${gate.boardingTime}">-->
-<!--        <button type="submit">Edit</button>-->
-<!--    </form>-->
+<div th:if="${div_selectFlight}">
+    <form method="post" th:action="@{/admin/gate/flight/search}">
+        <span th:text="'Selected Gate: ' + ${gateInfo.getNumber()}"></span>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Flight Number</th>
+                    <th>Destination</th>
+                    <th>Departure Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="flight : ${gateInfo.getFlights()}">
+                    <td>
+                        <label>
+                            <input type="radio" name="selectedFlight" th:value="${flight.getNumber()}">
+                        </label>
+                    </td>
+                    <td th:text="${flight.getNumber()}"></td>
+                    <td th:text="${flight.getDestination()}"></td>
+                    <td th:text="${flight.getDepartureTime()}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div th:if="${div_editFlight}">
+    <form method="post" th:object="${newGateInfo}" th:action="@{/admin/edit}">
+        <span th:text="'Selected Gate: ' + ${gateInfo.getNumber()}"></span>
+        <span th:text="'Selected Flight: ' + ${flightInfo.getFlightNumber()}"></span>
+        <br>
+        <span>Change the flight's info below:</span>
+        <input type="hidden" name="flightNumber" th:value="${flightInfo.getFlightNumber()}">
+        <span th:text="'Origin Destination: ' + ${flightInfo.getDestination()}"></span>
+        <label for="destination">Change Destination: </label>
+        <input type="text" name="destination" id="destination" th:value="${flightInfo.getDestination()}" th:placeholder="${flightInfo.getDestination()}">
+        <span th:text="'Origin Departure Time: ' + ${flightInfo.getDepartureTime().toString()}"></span>
+        <label for="departureTime">Change Departure Time: </label>
+        <input type="time" step="60" name="departureTime" id="departureTime" th:value="${flightInfo.getDepartureTime().toString()}" th:placeholder="${flightInfo.getDepartureTime().toString()}">
+        <br>
+        <button type="submit">Search</button>
+    </form>
 </div>
 </body>
 </html>

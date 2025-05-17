@@ -12,10 +12,11 @@ import java.util.Map;
 @Controller
 public class ErrorController {
     private final Map<String, String> errors = new HashMap<>(Map.of(
-            "UnknownException", "Error: there are someting goes wrong, but cannot be identified.",
+            "UnknownException", "Error: there are something goes wrong, but cannot be identified.",
             "NotAdminException", "Error: you cannot visit this page because of you're not admin.",
             "GateNotExistException", "Error: this gate is not exist, check your input again or contact admin.",
-            "FlightNotExistException", "Error: this flight is not exist, check your input again or contact admin."
+            "FlightNotExistException", "Error: this flight is not exist, check your input again or contact admin.",
+            "NotLoginViaOAuth2Exception", "Error: you cannot visit this page because you're not login yet, please visit /admin to login via OAuth2."
     ));
 
     @GetMapping("/error/{errorType}")

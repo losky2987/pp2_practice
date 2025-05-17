@@ -1,5 +1,6 @@
 package losky2987.pp2_practice.domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalTime;
@@ -7,6 +8,7 @@ import java.util.Objects;
 
 @Table
 public class Flight {
+    @Id
     private final String number;
     private String destination;
     private LocalTime departureTime;
