@@ -6,6 +6,8 @@ import losky2987.pp2_practice.repository.AdminRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 public class AdminService {
     private final AdminRepo adminRepo;
@@ -24,7 +26,11 @@ public class AdminService {
         return save(admin);
     }
 
-    public boolean isAdminExists(@NotNull Admin admin) {
-        return adminRepo.findAdminById(admin.getId()) != null;
+    public Admin findAdminById(@NotNull String id) {
+        return adminRepo.findAdminById(id);
+    }
+
+    public boolean isAdminExists(String id) {
+        return adminRepo.findAdminById(id) != null;
     }
 }

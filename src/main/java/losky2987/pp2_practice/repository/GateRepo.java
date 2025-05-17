@@ -10,5 +10,4 @@ public interface GateRepo {
     Gate save(Gate gate);
     Gate findGateByNumber(String number);
     List<Flight> findFlightsByNumber(String gateNumber);
-    Gate updateFlightsByNumber(String gateNumber, List<Flight> flights);
 }

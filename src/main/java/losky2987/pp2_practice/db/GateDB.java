@@ -11,5 +11,4 @@ public interface GateDB extends CrudRepository<Gate, String> {
     Gate save(Gate gate);
     Gate findGateByNumber(String number);
     List<Flight> findFlightsByNumber(String gateNumber);
-    Gate updateFlightsByNumber(String gateNumber, List<Flight> flights);
 }
