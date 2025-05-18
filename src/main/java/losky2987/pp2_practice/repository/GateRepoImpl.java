@@ -24,14 +24,4 @@ public class GateRepoImpl implements GateRepo {
     public Gate findGateByNumber(String number) {
         return gateDB.findGateByNumber(number);
     }
-
-    @Override
-    public Gate save(Gate gate) {
-        return gateDB.save(gate);
-    }
-
-    @Override
-    public List<Flight> findFlightsByNumber(String gateNumber) {
-        return gateDB.findFlightsByNumber(gateNumber);
-    }
 }

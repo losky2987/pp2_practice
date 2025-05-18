@@ -79,7 +79,7 @@ public class AdminController {
             return "redirect:/admin";
         }
         changeAttribute("div_selectFlight",true);
-        GateInfo gateInfo = new GateInfo(gateNumber, gateService.findFlightsByGateNumber(gateNumber));
+        GateInfo gateInfo = new GateInfo(gateNumber);
         changeAttribute("gateInfo",gateInfo);
         model.addAllAttributes(getAttributes());
         return "admin";
@@ -96,7 +96,7 @@ public class AdminController {
             return "admin";
         }
         changeAttribute("div_editFlight",true);
-        FlightInfo flightInfo = new FlightInfo(flightNumber, flightService.findFlightByNumber(flightNumber).getDestination(), flightService.findFlightByNumber(flightNumber).getDepartureTime());
+        FlightInfo flightInfo = new FlightInfo(flightNumber, flightService.findFlightByNumber(flightNumber).getDestination(), flightService.findFlightByNumber(flightNumber).getDepartureTime(), flightService.findFlightByNumber(flightNumber).getGateNumber());
         changeAttribute("flightInfo", flightInfo);
         model.addAllAttributes(getAttributes());
         return "admin";
@@ -107,7 +107,7 @@ public class AdminController {
         Flight flight = flightService.updateFlightInfo(newInfo);
         Gate gate = (Gate) model.getAttribute("gateInfo");
         assert gate != null;
-        gateService.updateFlightsByNumber(gate.getNumber(), List.of(flight));
+        flightService.updateFlight(flight.getNumber(), flight.getDestination(), flight.getDepartureTime(), flight.getGateNumber());
         changeAttribute("tipBox",true);
         changeAttribute("tipBoxMsg","Successfully updated the flight info.");
         return "admin";

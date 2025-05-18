@@ -33,4 +33,14 @@ public class FlightRepoImpl implements FlightRepo {
     public List<Flight> findFlightsByDestination(String destination) {
         return flightDB.findFlightsByDestination(destination);
     }
+
+    @Override
+    public List<Flight> findFlightsByDepartureTime(String departureTime) {
+        return flightDB.findFlightsByDepartureTime(departureTime);
+    }
+
+    @Override
+    public List<Flight> findFlightsByGateNumber(String gateNumber) {
+        return flightDB.findFlightsByGateNumber(gateNumber);
+    }
 }

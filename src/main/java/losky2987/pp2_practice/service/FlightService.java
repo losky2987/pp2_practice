@@ -1,6 +1,7 @@
 package losky2987.pp2_practice.service;
 
 import losky2987.pp2_practice.domain.Flight;
+import losky2987.pp2_practice.domain.Gate;
 import losky2987.pp2_practice.dto.FlightInfo;
 import losky2987.pp2_practice.repository.FlightRepo;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,16 @@ public class FlightService {
         return flightRepo.save(flight);
     }
 
-    @Transactional
-    public synchronized Flight addFlight(String number, String destination, LocalTime departureTime) {
-        Flight flight = new Flight.FlightBuilder().setNumber(number).setDestination(destination).setDepartureTime(departureTime).build();
+    public synchronized Flight addFlight(String number, String destination, LocalTime departureTime, String gateNumber) {
+        Flight flight = new Flight(number, destination, departureTime, gateNumber);
         return save(flight);
     }
 
-    public Flight updateFlight(String number, String destination, LocalTime departureTime) {
-        Flight flight = flightRepo.findFlightByNumber(number);
-        flight.setDestination(destination);
-        flight.setDepartureTime(departureTime);
-        return save(flight);
+    public Flight updateFlight(String number, String destination, LocalTime departureTime, String gateNumber) {
+        if (flightRepo.findFlightByNumber(number) != null) {
+            return null;
+        }
+        return addFlight(number, destination, departureTime, gateNumber);
     }
 
     public boolean isFlightExist(String number) {
@@ -51,8 +51,15 @@ public class FlightService {
     }
 
     public Flight updateFlightInfo(FlightInfo flightInfo) {
-        return updateFlight(flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime());
+        Flight flight = flightRepo.findFlightByNumber(flightInfo.getFlightNumber());
+        return updateFlight(flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime(), flight.getGateNumber());
     }
 
-    //feature: update flight info
+    public Gate getGateByFlightNumber(String flightNumber) {
+        Flight flight = flightRepo.findFlightByNumber(flightNumber);
+        if (flight == null) {
+            return null;
+        }
+        return new Gate(flight.getGateNumber());
+    }
 }

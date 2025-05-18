@@ -16,7 +16,7 @@ import java.util.List;
 public class GateDisplayController {
     @GetMapping("/{number}")
     public String display(@PathVariable("number") String number, Model model) {
-        Gate gate = new Gate.GateBuilder().setNumber(number).setFlights(List.of(new Flight.FlightBuilder().setNumber("HO1607").setDestination("Helsinki").setDepartureTime(LocalTime.of(9,0)).build())).build();
+        Gate gate = new Gate(number);
         model.addAttribute("gate", gate);
         return "gate_display";
     }

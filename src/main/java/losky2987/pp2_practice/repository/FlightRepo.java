@@ -9,4 +9,6 @@ public interface FlightRepo {
     Flight save(Flight flight);
     Flight findFlightByNumber(String flightNumber);
     List<Flight> findFlightsByDestination(String destination);
+    List<Flight> findFlightsByDepartureTime(String departureTime);
+    List<Flight> findFlightsByGateNumber(String gateNumber);
 }

@@ -10,40 +10,15 @@ import java.util.Objects;
 public class Flight {
     @Id
     private final String number;
-    private String destination;
-    private LocalTime departureTime;
+    private final String destination;
+    private final LocalTime departureTime;
+    private final String gateNumber;
 
-    public Flight(String number, String destination, LocalTime departureTime) {
+    public Flight(String number, String destination, LocalTime departureTime, String gateNumber) {
         this.number = number;
         this.destination = destination;
         this.departureTime = departureTime;
-    }
-
-    private Flight(FlightBuilder flightBuilder) {
-        this.number = flightBuilder.number;
-        this.destination = flightBuilder.destination;
-        this.departureTime = flightBuilder.departureTime;
-    }
-
-    public static class FlightBuilder {
-        private String number;
-        private String destination;
-        private LocalTime departureTime;
-        public FlightBuilder setNumber(String number) {
-            this.number = number;
-            return this;
-        }
-        public FlightBuilder setDestination(String destination) {
-            this.destination = destination;
-            return this;
-        }
-        public FlightBuilder setDepartureTime(LocalTime departureTime) {
-            this.departureTime = departureTime;
-            return this;
-        }
-        public Flight build() {
-            return new Flight(number, destination, departureTime);
-        }
+        this.gateNumber = gateNumber;
     }
 
     public String getNumber() {
@@ -58,24 +33,20 @@ public class Flight {
         return departureTime;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public void setDepartureTime(LocalTime departureTime) {
-        this.departureTime = departureTime;
+    public String getGateNumber() {
+        return gateNumber;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Flight flight = (Flight) o;
-        return Objects.equals(number, flight.number) && Objects.equals(destination, flight.destination) && Objects.equals(departureTime, flight.departureTime);
+        return Objects.equals(number, flight.number) && Objects.equals(destination, flight.destination) && Objects.equals(departureTime, flight.departureTime) && Objects.equals(gateNumber, flight.gateNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, destination, departureTime);
+        return Objects.hash(number, destination, departureTime, gateNumber);
     }
 
     @Override
@@ -84,6 +55,7 @@ public class Flight {
                 "number='" + number + '\'' +
                 ", destination='" + destination + '\'' +
                 ", departureTime=" + departureTime +
+                ", gate_number='" + gateNumber + '\'' +
                 '}';
     }
 }

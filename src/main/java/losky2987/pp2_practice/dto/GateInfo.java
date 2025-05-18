@@ -8,11 +8,9 @@ import java.util.Objects;
 
 public class GateInfo {
     @NotNull private String number;
-    @NotNull private List<Flight> flights;
 
-    public GateInfo(String number, List<Flight> flights) {
+    public GateInfo(String number) {
         this.number = number;
-        this.flights = flights;
     }
 
     public String getNumber() {
@@ -23,31 +21,22 @@ public class GateInfo {
         this.number = number;
     }
 
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         GateInfo gateInfo = (GateInfo) o;
-        return Objects.equals(number, gateInfo.number) && Objects.equals(flights, gateInfo.flights);
+        return Objects.equals(number, gateInfo.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, flights);
+        return Objects.hashCode(number);
     }
 
     @Override
     public String toString() {
         return "GateInfo{" +
-                "gateName='" + number + '\'' +
-                ", flights=" + flights +
+                "number='" + number + '\'' +
                 '}';
     }
 }

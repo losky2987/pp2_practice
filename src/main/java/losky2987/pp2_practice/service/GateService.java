@@ -15,21 +15,7 @@ public class GateService {
         this.gateRepo = gateRepo;
     }
 
-    public Gate save(Gate gate) {
-        return gateRepo.save(gate);
-    }
-
     public Gate findGateByNumber(String number) {
         return gateRepo.findGateByNumber(number);
-    }
-
-    public List<Flight> findFlightsByGateNumber(String gateNumber) {
-        return gateRepo.findFlightsByNumber(gateNumber);
-    }
-
-    public Gate updateFlightsByNumber(String gateNumber, List<Flight> flight) {
-        Gate gate = findGateByNumber(gateNumber);
-        gate.addAllFlights(flight);
-        return gateRepo.save(gate);
     }
 }
