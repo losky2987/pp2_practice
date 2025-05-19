@@ -24,6 +24,7 @@ public class AdminController {
     private final AdminService adminService;
     private final GateService gateService;
     private final FlightService flightService;
+
     private final Map<String, Object> attributes = new HashMap<>();
     private boolean firstVisit = true;
 
@@ -38,18 +39,29 @@ public class AdminController {
     }
 
     public void initialAttributes() {
-        attributes.put("errorAlert",false);
-        attributes.put("errorAlertMsg","");
-        attributes.put("div_selectFlight",false);
-        attributes.put("gateInfo",null);
-        attributes.put("div_editFlight",false);
-        attributes.put("flightInfo",null);
-        attributes.put("tipBox", false);
-        attributes.put("tipBoxMsg", "");
+        attributes.put("userId", null);
+        attributes.put("gateInfo", null);
+        attributes.put("flightInfo", null);
+        attributes.put("ui_viewFlights", false);
+        attributes.put("ui_viewGates", false);
+        attributes.put("ui_index", false);
+        attributes.put("currentFlights",null);
+        attributes.put("toastMsg", null);
     }
 
     public void changeAttribute(String attribute, Object value) {
         attributes.put(attribute, value);
+    }
+
+    public void setUI(String uiName){
+        List<String> uiNames = List.of("ui_index", "ui_viewFlights", "ui_viewGates"); // maintenance this list to make ui switch convenient
+        for(String str : uiNames){
+            if (str.equals(uiName)){
+                attributes.put(str, true);
+            } else {
+                attributes.put(str, false);
+            }
+        }
     }
 
     @GetMapping("/admin")
@@ -59,14 +71,42 @@ public class AdminController {
             return "redirect:/error/NotAdminException";
         }
         session.setAttribute("userId", userId);
+        changeAttribute("userId", userId);
         if (firstVisit) {
             initialAttributes();
             firstVisit = false;
         }
-        Map<String, Object> attrs = getAttributes();
-        model.addAllAttributes(attrs);
+        setUI("ui_index");
+        changeAttribute("currentFlights", flightService.getAllFlights());
+        model.addAllAttributes(getAttributes());
         return "admin";
     }
+
+    @PostMapping("/admin")
+    public String returnIndex(){
+        return "redirect:/admin";
+    }
+
+    //    this is an example to use toastMsg, do not delete, remove or change it!
+    @PostMapping("/admin/toastMsg")
+    public String testToast(Model model, HttpSession session){
+        changeAttribute("toastMsg", "this is a test");
+        model.addAllAttributes(getAttributes());
+        return "admin :: toastFragment";
+    }
+
+    @PostMapping("/admin/viewFlights")
+    public String ui_viewFlights(Model model, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/error/NotAdminException";
+        }
+        setUI("ui_viewFlights");
+        model.addAllAttributes(getAttributes());
+        return "admin";
+    }
+
+
+    // the functions below was dropped off, reimplement with ui change
 
     @PostMapping("/admin/gate/search")
     public String searchGateResult(Model model, HttpSession session, @RequestParam("gateNumber") String gateNumber) {
@@ -74,8 +114,8 @@ public class AdminController {
             return "redirect:/error/NotLoginViaOAuth2Exception";
         }
         if (gateService.findGateByNumber(gateNumber) == null) {
-            changeAttribute("errorAlert",true);
-            changeAttribute("errorAlertMsg","Error: the gate number " + gateNumber + " does not exist.");
+            changeAttribute("msgBox",true);
+            changeAttribute("msgAlert","Error: the gate number " + gateNumber + " does not exist.");
             return "redirect:/admin";
         }
         changeAttribute("div_selectFlight",true);
@@ -91,8 +131,8 @@ public class AdminController {
             return "redirect:/error/NotLoginViaOAuth2Exception";
         }
         if (flightService.findFlightByNumber(flightNumber) == null) {
-            changeAttribute("errorAlert",true);
-            changeAttribute("errorAlertMsg","Error: the flight number " + flightNumber + " does not exist.");
+            changeAttribute("msgBox",true);
+            changeAttribute("msgAlert","Error: the flight number " + flightNumber + " does not exist.");
             return "admin";
         }
         changeAttribute("div_editFlight",true);
@@ -108,8 +148,8 @@ public class AdminController {
         Gate gate = (Gate) model.getAttribute("gateInfo");
         assert gate != null;
         flightService.updateFlight(flight.getNumber(), flight.getDestination(), flight.getDepartureTime(), flight.getGateNumber());
-        changeAttribute("tipBox",true);
-        changeAttribute("tipBoxMsg","Successfully updated the flight info.");
+        changeAttribute("msgBox",true);
+        changeAttribute("msgInfo","Successfully updated the flight info.");
         return "admin";
     }
 }

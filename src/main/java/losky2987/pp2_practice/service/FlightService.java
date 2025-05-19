@@ -5,7 +5,6 @@ import losky2987.pp2_practice.domain.Gate;
 import losky2987.pp2_practice.dto.FlightInfo;
 import losky2987.pp2_practice.repository.FlightRepo;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.List;

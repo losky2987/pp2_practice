@@ -16,7 +16,8 @@ public class ErrorController {
             "NotAdminException", "Error: you cannot visit this page because of you're not admin.",
             "GateNotExistException", "Error: this gate is not exist, check your input again or contact admin.",
             "FlightNotExistException", "Error: this flight is not exist, check your input again or contact admin.",
-            "NotLoginViaOAuth2Exception", "Error: you cannot visit this page because you're not login yet, please visit /admin to login via OAuth2."
+            "NotLoginViaOAuth2Exception", "Error: you cannot visit this page because you're not login yet, please visit /admin to login via OAuth2.",
+            "PageNotExistException", "Error: the page you visit is not exist, check your input and try again."
     ));
 
     @GetMapping("/error/{errorType}")
