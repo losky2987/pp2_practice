@@ -68,7 +68,7 @@ public class AdminController {
     public String login(Model model, @AuthenticationPrincipal OAuth2User principal, HttpSession session) {
         String userId = principal.getAttributes().get("id").toString();
         if (!adminService.isAdminExists(userId)) {
-            return "redirect:/error/NotAdminException";
+            return "redirect:/oauth2/authorization/github";
         }
         session.setAttribute("userId", userId);
         changeAttribute("userId", userId);
@@ -98,12 +98,15 @@ public class AdminController {
     @PostMapping("/admin/viewFlights")
     public String ui_viewFlights(Model model, HttpSession session) {
         if (session.getAttribute("userId") == null) {
-            return "redirect:/error/NotAdminException";
+            return "redirect:/oauth2/authorization/github";
         }
         setUI("ui_viewFlights");
         model.addAllAttributes(getAttributes());
         return "admin";
     }
+
+
+
 
 
     // the functions below was dropped off, reimplement with ui change
