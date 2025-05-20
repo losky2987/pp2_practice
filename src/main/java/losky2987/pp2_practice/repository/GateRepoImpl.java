@@ -21,6 +21,11 @@ public class GateRepoImpl implements GateRepo {
     }
 
     @Override
+    public Gate save(Gate gate) {
+        return gateDB.save(gate);
+    }
+
+    @Override
     public Gate findGateByNumber(String number) {
         return gateDB.findGateByNumber(number);
     }

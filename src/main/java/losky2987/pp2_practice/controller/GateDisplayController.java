@@ -16,7 +16,7 @@ import java.util.List;
 public class GateDisplayController {
     @GetMapping("/{number}")
     public String display(@PathVariable("number") String number, Model model) {
-        Gate gate = new Gate(number);
+        Gate gate = new Gate(null, number);
         model.addAttribute("gate", gate);
         return "gate_display";
     }

@@ -31,10 +31,9 @@ public class AdminControllerTest {
     @WithMockOAuth2User(id = 65465493)
     @DisplayName("test legally user can visit admin")
     void canVisitAdmin() throws Exception {
-        String id = "65465493";
-        Admin admin = new Admin(id);
-        when(adminService.findAdminById(id)).thenReturn(admin);
-        when(adminService.isAdminExists(id)).thenReturn(true);
+        long id = 65465493;
+        Admin admin = new Admin(null, id);
+        when(adminService.findAdminByOauth2Id(id)).thenReturn(admin);
         mvc.perform(get("/admin")).andExpect(view().name("admin"))
         .andExpect(status().is2xxSuccessful());
     }
@@ -44,10 +43,9 @@ public class AdminControllerTest {
     @WithMockOAuth2User(id = 12345678)
     @DisplayName("test ilegally user cannot visit admin")
     void cannotVisitAdmin() throws Exception {
-        String id = "12345678";
-        Admin admin = new Admin(id);
-        when(adminService.findAdminById(id)).thenReturn(admin);
-        when(adminService.isAdminExists(id)).thenReturn(false);
+        long id = 12345678;
+        Admin admin = new Admin(null, id);
+        when(adminService.findAdminByOauth2Id(id)).thenReturn(admin);
         mvc.perform(get("/admin")).andExpect(redirectedUrl("/error/NotAdminException"))
                 .andExpect(status().is3xxRedirection());
     }

@@ -4,6 +4,7 @@ import losky2987.pp2_practice.db.FlightDB;
 import losky2987.pp2_practice.domain.Flight;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -35,7 +36,7 @@ public class FlightRepoImpl implements FlightRepo {
     }
 
     @Override
-    public List<Flight> findFlightsByDepartureTime(String departureTime) {
+    public List<Flight> findFlightsByDepartureTime(LocalTime departureTime) {
         return flightDB.findFlightsByDepartureTime(departureTime);
     }
 

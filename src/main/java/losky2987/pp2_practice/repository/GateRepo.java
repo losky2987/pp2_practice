@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface GateRepo {
     List<Gate> findAll();
+    Gate save(Gate gate);
     Gate findGateByNumber(String number);
 }

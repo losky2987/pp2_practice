@@ -1,6 +1,6 @@
 -- this file only use for add test data in sql tables, not for actually use
 
-insert into admin(id) values (65465493),
+insert into admin(oauth2_id) values (65465493),
                              (11112222);
 
 insert into gate(number) values ('A01'),

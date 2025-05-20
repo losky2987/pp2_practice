@@ -3,15 +3,18 @@ drop table if exists gate cascade;
 drop table if exists flight cascade;
 
 create table admin(
-    id text primary key
+    id serial primary key,
+    oauth2_id integer not null
 );
 
 create table gate(
-                     number text primary key
+    id serial primary key,
+    number text not null unique
 );
 
 create table flight(
-    number text primary key,
+    id serial primary key,
+    number text not null unique ,
     destination text not null,
     departure_time time not null,
     gate_number text references gate(number)

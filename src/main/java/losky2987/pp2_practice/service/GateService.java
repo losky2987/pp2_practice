@@ -15,7 +15,20 @@ public class GateService {
         this.gateRepo = gateRepo;
     }
 
+    public synchronized Gate save(Gate gate) {
+        return gateRepo.save(gate);
+    }
+
+    public synchronized Gate save(String gateNumber) {
+        Gate gate = new Gate(null, gateNumber);
+        return gateRepo.save(gate);
+    }
+
     public Gate findGateByNumber(String number) {
         return gateRepo.findGateByNumber(number);
+    }
+
+    public List<Gate> getAllGates() {
+        return gateRepo.findAll();
     }
 }

@@ -15,8 +15,8 @@ public class AdminRepoImpl implements AdminRepo {
     }
 
     @Override
-    public Admin findAdminById(String id) {
-        return adminDB.findAdminById(id);
+    public Admin findAdminByOauth2Id(long id) {
+        return adminDB.findAdminByOauth2Id(id);
     }
 
     @Override

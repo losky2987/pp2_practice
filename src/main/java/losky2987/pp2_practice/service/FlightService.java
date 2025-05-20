@@ -21,16 +21,24 @@ public class FlightService {
         return flightRepo.save(flight);
     }
 
-    public synchronized Flight addFlight(String number, String destination, LocalTime departureTime, String gateNumber) {
-        Flight flight = new Flight(number, destination, departureTime, gateNumber);
+    public synchronized Flight addFlight(Long id, String number, String destination, LocalTime departureTime, String gateNumber) {
+        Flight flight = new Flight(id, number, destination, departureTime, gateNumber);
         return save(flight);
     }
 
-    public Flight updateFlight(String number, String destination, LocalTime departureTime, String gateNumber) {
+    public synchronized Flight addFlight(Flight flight) {
+        return save(flight);
+    }
+
+    public Flight updateFlight(Long id, String number, String destination, LocalTime departureTime, String gateNumber) {
         if (flightRepo.findFlightByNumber(number) != null) {
             return null;
         }
-        return addFlight(number, destination, departureTime, gateNumber);
+        return addFlight(id, number, destination, departureTime, gateNumber);
+    }
+
+    public Flight updateFlight(Flight flight) {
+        return save(flight);
     }
 
     public boolean isFlightExist(String number) {
@@ -49,16 +57,11 @@ public class FlightService {
         return flightRepo.findFlightByNumber(number);
     }
 
-    public Flight updateFlightInfo(FlightInfo flightInfo) {
-        Flight flight = flightRepo.findFlightByNumber(flightInfo.getFlightNumber());
-        return updateFlight(flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime(), flight.getGateNumber());
-    }
-
     public Gate getGateByFlightNumber(String flightNumber) {
         Flight flight = flightRepo.findFlightByNumber(flightNumber);
         if (flight == null) {
             return null;
         }
-        return new Gate(flight.getGateNumber());
+        return new Gate(null, flight.getGateNumber());
     }
 }
