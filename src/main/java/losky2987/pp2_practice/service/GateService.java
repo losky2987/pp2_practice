@@ -24,6 +24,14 @@ public class GateService {
         return gateRepo.save(gate);
     }
 
+    public Gate addGate(Gate gate) {
+        return gateRepo.save(gate);
+    }
+
+    public Gate addGate(String gateNumber) {
+        return save(gateNumber);
+    }
+
     public Gate findGateByNumber(String number) {
         return gateRepo.findGateByNumber(number);
     }

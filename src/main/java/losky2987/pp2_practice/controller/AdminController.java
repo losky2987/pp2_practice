@@ -2,6 +2,7 @@ package losky2987.pp2_practice.controller;
 
 import jakarta.servlet.http.HttpSession;
 import losky2987.pp2_practice.domain.Flight;
+import losky2987.pp2_practice.domain.Gate;
 import losky2987.pp2_practice.dto.FlightInfo;
 import losky2987.pp2_practice.dto.GateInfo;
 import losky2987.pp2_practice.service.AdminService;
@@ -40,15 +41,20 @@ public class AdminController {
     }
 
     public void initialAttributes() {
+        Map<String, Object> uiAttributes = new HashMap<>(Map.of(
+                "ui_index", false,
+                "ui_flights", false,
+                "ui_flights_add", true,
+                "ui_flights_update", false,
+                "ui_gates", false,
+                "ui_gates_add", true
+        ));
         attributes.put("userId", null);
         attributes.put("gateInfo", new GateInfo(""));
         attributes.put("flightInfo", new FlightInfo("", "", LocalTime.of(0,0 ), ""));
-        attributes.put("ui_flights", false);
-        attributes.put("ui_flights_add", true); // active
-        attributes.put("ui_flights_update", false); // active
-        attributes.put("ui_gates", false);
-        attributes.put("ui_index", false);
+        attributes.putAll(uiAttributes);
         attributes.put("currentFlights",null);
+        attributes.put("allFlights",null);
         attributes.put("toastMsg", null);
     }
 
@@ -78,6 +84,17 @@ public class AdminController {
         }
     }
 
+    public void setGatesTab(String tabName) {
+        List<String> tabNames = List.of("ui_gates_add");
+        for(String str : tabNames){
+            if (str.equals(tabName)){
+                attributes.put(str, true);
+            } else {
+                attributes.put(str, false);
+            }
+        }
+    }
+
     public void clearToastMsg() {
         attributes.put("toastMsg", null);
     }
@@ -93,10 +110,12 @@ public class AdminController {
         if (!adminService.isAdminExist(userId)) {
             return "redirect:/oauth2/authorization/github";
         }
+
         session.setAttribute("userId", userId);
         changeAttribute("userId", userId);
         if (firstVisit) {
             initialAttributes();
+            changeAttribute("toastMsg", "You are logged in");
             firstVisit = false;
         }
         setUI("ui_index");
@@ -118,6 +137,7 @@ public class AdminController {
         }
         setUI("ui_flights");
         setFlightsTab("ui_flights_add");
+        changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         model.addAllAttributes(getAttributes());
         return "admin";
     }
@@ -134,6 +154,7 @@ public class AdminController {
         }else{
             changeAttribute("toastMsg", "Flight not added");
         }
+        changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         setUI("ui_flights");
         setFlightsTab("ui_flights_add");
         model.addAllAttributes(getAttributes());
@@ -154,6 +175,7 @@ public class AdminController {
             FlightInfo flightInfo = new FlightInfo(flight.getNumber(), flight.getDestination(), flight.getDepartureTime(), flight.getGateNumber());
             changeAttribute("flightInfo", flightInfo);
         }
+        changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         setUI("ui_flights");
         setFlightsTab("ui_flights_update");
         model.addAllAttributes(getAttributes());
@@ -173,8 +195,41 @@ public class AdminController {
             changeAttribute("toastMsg", "Flight not updated");
         }
         changeAttribute("flightInfo", new FlightInfo("","",LocalTime.of(0,0),""));
+        changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         setUI("ui_flights");
         setFlightsTab("ui_flights_update");
+        model.addAllAttributes(getAttributes());
+        return "admin";
+    }
+
+    @PostMapping("/admin/gates")
+    public String ui_gates_post(Model model, HttpSession session) {
+        clearToastMsg();
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/oauth2/authorization/github";
+        }
+        changeAttribute("allGates", gateService.getAllGates().stream().sorted(Comparator.comparing(Gate::getNumber)).toList());
+        setUI("ui_gates");
+        setGatesTab("ui_gates_add");
+        model.addAllAttributes(getAttributes());
+        return "admin";
+    }
+
+    @PostMapping("/admin/gates/add")
+    public String addGate(Model model, HttpSession session, @RequestParam("gateNumber") String gateNumber) {
+        clearToastMsg();
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/oauth2/authorization/github";
+        }
+        Gate gate = new Gate(null, gateNumber);
+        if (gateService.addGate(gate) != null) {
+            changeAttribute("toastMsg", "Gate added");
+        } else {
+            changeAttribute("toastMsg", "Gate not added");
+        }
+        changeAttribute("allGates", gateService.getAllGates().stream().sorted(Comparator.comparing(Gate::getNumber)).toList());
+        setUI("ui_gates");
+        setGatesTab("ui_gates_add");
         model.addAllAttributes(getAttributes());
         return "admin";
     }

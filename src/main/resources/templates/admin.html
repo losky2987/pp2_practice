@@ -48,7 +48,7 @@
         <div class="d-flex justify-content-center">
             <span id="currentTime"></span>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center overflow-auto" style="height: 450px;">
             <table class="table table-borderless caption-top">
                 <caption>Current Flights</caption>
                 <thead class="table-light">
@@ -76,7 +76,7 @@
     <!--  ui_flights  -->
     <div class="container justify-content-between align-items-center mt-4" th:if="${ui_flights}">
         <!--  Tabs  -->
-        <ul class="nav nav-tabs" id="formTabs" role="tablist">
+        <ul class="nav nav-tabs" id="formTabsFlight" role="tablist">
             <li class="nav-item">
                 <button class="nav-link" th:classappend="${ui_flights_add} ? ' active' : ''" data-bs-toggle="tab" data-bs-target="#addFlightForm">Add</button>
             </li>
@@ -85,25 +85,17 @@
             </li>
         </ul>
         <div class="tab-content">
-            <!--  Add flight form  -->
+            <!--  Add Flight form  -->
             <div class="tab-pane fade" th:classappend="${ui_flights_add} ? ' show active' : ''" id="addFlightForm">
                 <form id="addFlight" method="post" th:action="@{/admin/flights/add}">
-                    <div class="mb-3">
-                        <label for="flightNumber" class="form-label">Flight number:</label>
-                        <input type="text" style="width: 200px;" id="flightNumber" name="flightNumber" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="destinations" class="form-label">Destination:</label>
-                        <input type="text" style="width: 200px;" id="destinations" name="destination" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="departureTime" class="form-label">Departure Time:</label>
-                        <input type="time" style="width: 200px;" step="60" id="departureTime" name="departureTime" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="gateNumber" class="form-label">Gate:</label>
-                        <input type="text" style="width: 200px;" id="gateNumber" name="gateNumber" class="form-control" required>
-                    </div>
+                    <label for="flightNumber" class="form-label">Flight number:</label>
+                    <input type="text" style="width: 200px;" id="flightNumber" name="flightNumber" class="form-control" required>
+                    <label for="destinations" class="form-label">Destination:</label>
+                    <input type="text" style="width: 200px;" id="destinations" name="destination" class="form-control" required>
+                    <label for="departureTime" class="form-label">Departure Time:</label>
+                    <input type="time" style="width: 200px;" step="60" id="departureTime" name="departureTime" class="form-control" required>
+                    <label for="gateNumber" class="form-label">Gate:</label>
+                    <input type="text" style="width: 200px;" id="gateNumber" name="gateNumber" class="form-control" required>
                     <button type="submit" class="btn btn-outline-primary">Add</button>
                 </form>
             </div>
@@ -127,9 +119,97 @@
                 </form>
             </div>
         </div>
+        <div class="d-flex justify-content-center overflow-auto" style="height: 450px;">
+            <table class="table table-borderless caption-top">
+                <caption>All Flights</caption>
+                <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Flight Number</th>
+                    <th>Destination</th>
+                    <th>Departure Time</th>
+                    <th>Gate</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="flight,i : ${allFlights}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${flight.getNumber()}"></td>
+                    <td th:text="${flight.getDestination()}"></td>
+                    <td th:text="${flight.getDepartureTime()}"></td>
+                    <td th:text="${flight.getGateNumber()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <!--  ui_gates  -->
-    <!--  Gates: add, update  -->
+    <div class="container justify-content-between align-items-center mt-4" th:if="${ui_gates}">
+        <!--  Tabs  -->
+        <ul class="nav nav-tabs" id="formTabsGate" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link" th:classappend="${ui_gates_add} ? ' active' : ''" data-bs-toggle="tab" data-bs-target="#addFlightForm">Add</button>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <button class="nav-link" th:classappend="${ui_gates_update} ? ' active' : ''" data-bs-toggle="tab" data-bs-target="#updateFlightForm">Update</button>-->
+<!--            </li>-->
+        </ul>
+        <div class="tab-content">
+            <!--  Add Gate form  -->
+            <div class="tab-pane fade" th:classappend="${ui_gates_add} ? ' show active' : ''" id="addGateForm">
+                <form id="addGate" method="post" th:action="@{/admin/gates/add}">
+                    <div class="mb-3">
+                        <label for="flightNumber" class="form-label">Gate number:</label>
+                        <input type="text" style="width: 200px;" id="gateNumberA" name="gateNumber" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Add</button>
+                </form>
+            </div>
+
+            <!--  Update Gate form  -->
+<!--            <div class="tab-pane fade" th:classappend="${ui_gates_update} ? ' show active' : ''" id="updateGateForm">-->
+<!--                <form id="searchFlight" method="post" th:action="@{/admin/flights/search}">-->
+<!--                    <label for="flightNumberA">Flight number: </label>-->
+<!--                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfo.getFlightNumber()}" th:placeholder="${flightInfo.getFlightNumber()}" required>-->
+<!--                    <button type="submit" class="btn btn-outline-primary">Search</button>-->
+<!--                </form>-->
+<!--                <form id="updateFlight" method="post" th:action="@{/admin/flights/update}">-->
+<!--                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfo.getFlightNumber()}">-->
+<!--                    <label for="destination">Destination: </label>-->
+<!--                    <input type="text" id="destination" name="destination" th:value="${flightInfo.getDestination()}" th:placeholder="${flightInfo.getDestination()}">-->
+<!--                    <label for="departureTimeB">Departure Time: </label>-->
+<!--                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfo.getDepartureTime()}" th:placeholder="${flightInfo.getDepartureTime()}">-->
+<!--                    <label for="gateNumberB">Gate: </label>-->
+<!--                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfo.getGateNumber()}" th:placeholder="${flightInfo.getGateNumber()}">-->
+<!--                    <button type="submit" class="btn btn-outline-primary">Update</button>-->
+<!--                </form>-->
+<!--            </div>-->
+        </div>
+        <br>
+        <div class="d-flex justify-content-center overflow-auto" style="height: 450px;">
+            <table class="table table-borderless caption-top">
+                <caption>All Gates</caption>
+                <thead class="table-light">
+                <tr>
+                    <th>#</th>
+<!--                    <th>Flight Number</th>-->
+<!--                    <th>Destination</th>-->
+<!--                    <th>Departure Time</th>-->
+                    <th>Gate Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="gate,i : ${allGates}">
+                    <td th:text="${i.count}"></td>
+<!--                    <td th:text="${flight.getNumber()}"></td>-->
+<!--                    <td th:text="${flight.getDestination()}"></td>-->
+<!--                    <td th:text="${flight.getDepartureTime()}"></td>-->
+                    <td th:text="${gate.getNumber()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </main>
 
