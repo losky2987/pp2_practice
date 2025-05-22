@@ -11,18 +11,21 @@
     <script src="/js/toast.js"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<main class="container position-relative flex-grow-1">
+<header class="container position-relative flex-grow-1">
     <!--  top bar, show functions and user info  -->
     <div class="container d-flex justify-content-between align-items-center mt-4">
         <div class="d-flex gap-2">
-            <form th:action="@{/admin}" method="post">
-                <button type="submit" class="btn btn-light">Dashboard</button>
+            <form th:action="@{/admin}" method="get">
+                <button type="submit" class="btn btn-outline-primary">Dashboard</button>
             </form>
-            <form th:action="@{/admin/flights}" method="post">
+            <form th:action="@{/admin/flights}" method="get">
                 <button type="submit" class="btn btn-light">Flights</button>
             </form>
-            <form th:action="@{/admin/gates}" method="post">
+            <form th:action="@{/admin/gates}" method="get">
                 <button type="submit" class="btn btn-light">Gates</button>
+            </form>
+            <form th:action="@{/gate}" method="get">
+                <button type="submit" class="btn btn-outline-primary">Gate Link List</button>
             </form>
         </div>
         <div class="d-flex gap-2">
@@ -40,8 +43,9 @@
             </div>
         </div>
     </div>
-
     <hr>
+</header>
+<main class="container position-relative flex-grow-1">
     <!--  CONTENT START HERE  -->
     <!--  ui_index, show some statistic  -->
     <div class="container justify-content-between align-items-center mt-4" th:if="${ui_index}">
@@ -88,13 +92,13 @@
             <!--  Add Flight form  -->
             <div class="tab-pane fade" th:classappend="${ui_flights_add} ? ' show active' : ''" id="addFlightForm">
                 <form id="addFlight" method="post" th:action="@{/admin/flights/add}">
-                    <label for="flightNumber" class="form-label">Flight number:</label>
+                    <label for="flightNumber">Flight number:</label>
                     <input type="text" style="width: 200px;" id="flightNumber" name="flightNumber" class="form-control" required>
-                    <label for="destinations" class="form-label">Destination:</label>
+                    <label for="destinations">Destination:</label>
                     <input type="text" style="width: 200px;" id="destinations" name="destination" class="form-control" required>
-                    <label for="departureTime" class="form-label">Departure Time:</label>
+                    <label for="departureTime">Departure Time:</label>
                     <input type="time" style="width: 200px;" step="60" id="departureTime" name="departureTime" class="form-control" required>
-                    <label for="gateNumber" class="form-label">Gate:</label>
+                    <label for="gateNumber">Gate:</label>
                     <input type="text" style="width: 200px;" id="gateNumber" name="gateNumber" class="form-control" required>
                     <button type="submit" class="btn btn-outline-primary">Add</button>
                 </form>
@@ -102,23 +106,24 @@
 
             <!--  Update Flight form  -->
             <div class="tab-pane fade" th:classappend="${ui_flights_update} ? ' show active' : ''" id="updateFlightForm">
-                <form id="searchFlight" method="post" th:action="@{/admin/flights/search}">
+                <form id="searchFlight" method="get" th:action="@{/admin/flights/search}">
                     <label for="flightNumberA">Flight number: </label>
-                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfo.getFlightNumber()}" th:placeholder="${flightInfo.getFlightNumber()}" required>
+                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfo != null ? flightInfo.getFlightNumber() : ''}" th:placeholder="${flightInfo.getFlightNumber()}" required>
                     <button type="submit" class="btn btn-outline-primary">Search</button>
                 </form>
                 <form id="updateFlight" method="post" th:action="@{/admin/flights/update}">
-                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfo.getFlightNumber()}">
+                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfo != null ? flightInfo.getFlightNumber() : ''}">
                     <label for="destination">Destination: </label>
-                    <input type="text" id="destination" name="destination" th:value="${flightInfo.getDestination()}" th:placeholder="${flightInfo.getDestination()}">
+                    <input type="text" id="destination" name="destination" th:value="${flightInfo != null ? flightInfo.getDestination(): ''}" th:placeholder="${flightInfo != null ? flightInfo.getDestination() : ''}">
                     <label for="departureTimeB">Departure Time: </label>
-                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfo.getDepartureTime()}" th:placeholder="${flightInfo.getDepartureTime()}">
+                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfo != null ? flightInfo.getDepartureTime() : ''}" th:placeholder="${flightInfo != null ? flightInfo.getDepartureTime() : ''}">
                     <label for="gateNumberB">Gate: </label>
-                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfo.getGateNumber()}" th:placeholder="${flightInfo.getGateNumber()}">
+                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfo != null ? flightInfo.getGateNumber() : ''}" th:placeholder="${flightInfo != null ? flightInfo.getGateNumber() : ''}">
                     <button type="submit" class="btn btn-outline-primary">Update</button>
                 </form>
             </div>
         </div>
+        <br>
         <div class="d-flex justify-content-center overflow-auto" style="height: 450px;">
             <table class="table table-borderless caption-top">
                 <caption>All Flights</caption>
@@ -159,7 +164,7 @@
             <div class="tab-pane fade" th:classappend="${ui_gates_add} ? ' show active' : ''" id="addGateForm">
                 <form id="addGate" method="post" th:action="@{/admin/gates/add}">
                     <div class="mb-3">
-                        <label for="flightNumber" class="form-label">Gate number:</label>
+                        <label for="gateNumberA">Gate: </label>
                         <input type="text" style="width: 200px;" id="gateNumberA" name="gateNumber" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-outline-primary">Add</button>
@@ -212,7 +217,6 @@
     </div>
 
 </main>
-
 <!--  Footer: info of apps  -->
 <footer class="container text-center mt-4 mb-2">
     <hr>

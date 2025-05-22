@@ -7,6 +7,7 @@ import losky2987.pp2_practice.repository.FlightRepo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -63,5 +64,21 @@ public class FlightService {
             return null;
         }
         return new Gate(null, flight.getGateNumber());
+    }
+
+    public List<Flight> getFlightsByDepartureTime(LocalTime departureTime) {
+        return flightRepo.findFlightsByDepartureTime(departureTime);
+    }
+
+    public List<Flight> getFlightsByGateNumber(String gateNumber) {
+        return flightRepo.findFlightsByGateNumber(gateNumber);
+    }
+
+    public Flight getNextFlightByGate(String gateNumber) {
+        List<Flight> flights = getFlightsByGateNumber(gateNumber).stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList();
+        if (flights.isEmpty()) {
+            return null;
+        }
+        return flights.getFirst();
     }
 }

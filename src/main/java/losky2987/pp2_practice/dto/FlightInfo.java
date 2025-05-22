@@ -7,10 +7,10 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 public class FlightInfo {
-    @NotNull private String flightNumber;
-    @NotNull private String destination;
-    @NotNull @DateTimeFormat(pattern = "HH:mm") private LocalTime departureTime;
-    @NotNull private String gateNumber;
+    private String flightNumber;
+    private String destination;
+    @DateTimeFormat(pattern = "HH:mm") private LocalTime departureTime;
+    private String gateNumber;
 
     public FlightInfo(String flightNumber, String destination, LocalTime departureTime, String gateNumber) {
         this.flightNumber = flightNumber;

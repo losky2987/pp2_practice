@@ -21,7 +21,8 @@ public class SpringSecurityConfig {
                         .requestMatchers("/admin/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .oauth2Login(Customizer.withDefaults());
+                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(e -> e.defaultSuccessUrl("/", false));
         return chainBuilder.build();
     }
 }

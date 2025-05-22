@@ -50,7 +50,6 @@ public class AdminController {
                 "ui_gates_add", true
         ));
         attributes.put("userId", null);
-        attributes.put("gateInfo", new GateInfo(""));
         attributes.put("flightInfo", new FlightInfo("", "", LocalTime.of(0,0 ), ""));
         attributes.putAll(uiAttributes);
         attributes.put("currentFlights",null);
@@ -99,6 +98,11 @@ public class AdminController {
         attributes.put("toastMsg", null);
     }
 
+    @GetMapping("/")
+    public String jump() {
+        return "redirect:/gate";
+    }
+
     @GetMapping("/admin")
     public String login(Model model, @AuthenticationPrincipal OAuth2User principal, HttpSession session) {
         clearToastMsg();
@@ -129,11 +133,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/admin/flights")
-    public String ui_flights_post(Model model, HttpSession session) {
+    @GetMapping("/admin/flights")
+    public String ui_flights(Model model, HttpSession session) {
         clearToastMsg();
         if (session.getAttribute("userId") == null) {
-            return "redirect:/oauth2/authorization/github";
+            return "redirect:/admin";
         }
         setUI("ui_flights");
         setFlightsTab("ui_flights_add");
@@ -146,7 +150,7 @@ public class AdminController {
     public String addFlight_post(Model model, HttpSession session, @ModelAttribute FlightInfo flightInfo) {
         clearToastMsg();
         if (session.getAttribute("userId") == null) {
-            return "redirect:/oauth2/authorization/github";
+            return "redirect:/admin";
         }
         Flight flight = new Flight(null, flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime(), flightInfo.getGateNumber());
         if (flightService.addFlight(flight) != null) {
@@ -161,11 +165,11 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/admin/flights/search")
-    public String searchFlight_post(Model model, HttpSession session, @RequestParam("flightNumber") String flightNumber) {
+    @GetMapping("/admin/flights/search")
+    public String searchFlight(Model model, HttpSession session, @RequestParam("flightNumber") String flightNumber) {
         clearToastMsg();
         if (session.getAttribute("userId") == null) {
-            return "redirect:/oauth2/authorization/github";
+            return "redirect:/admin";
         }
         Flight flight = flightService.findFlightByNumber(flightNumber);
         if (flight == null) {
@@ -185,7 +189,7 @@ public class AdminController {
     @PostMapping("/admin/flights/update")
     public String updateFlight_post(Model model, HttpSession session, @ModelAttribute FlightInfo flightInfo) {
         if (session.getAttribute("userId") == null) {
-            return "redirect:/oauth2/authorization/github";
+            return "redirect:/admin";
         }
         Flight flight = flightService.findFlightByNumber(flightInfo.getFlightNumber());
         Flight updatedFlight = new Flight(flight.getId(), flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime(), flightInfo.getGateNumber());
@@ -202,11 +206,11 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/admin/gates")
-    public String ui_gates_post(Model model, HttpSession session) {
+    @GetMapping("/admin/gates")
+    public String ui_gates(Model model, HttpSession session) {
         clearToastMsg();
         if (session.getAttribute("userId") == null) {
-            return "redirect:/oauth2/authorization/github";
+            return "redirect:/admin";
         }
         changeAttribute("allGates", gateService.getAllGates().stream().sorted(Comparator.comparing(Gate::getNumber)).toList());
         setUI("ui_gates");
@@ -219,7 +223,7 @@ public class AdminController {
     public String addGate(Model model, HttpSession session, @RequestParam("gateNumber") String gateNumber) {
         clearToastMsg();
         if (session.getAttribute("userId") == null) {
-            return "redirect:/oauth2/authorization/github";
+            return "redirect:/admin";
         }
         Gate gate = new Gate(null, gateNumber);
         if (gateService.addGate(gate) != null) {
