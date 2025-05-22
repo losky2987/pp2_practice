@@ -3,6 +3,8 @@ package losky2987.pp2_practice.controller;
 import losky2987.pp2_practice.config.SpringSecurityConfig;
 import losky2987.pp2_practice.domain.Admin;
 import losky2987.pp2_practice.service.AdminService;
+import losky2987.pp2_practice.service.FlightService;
+import losky2987.pp2_practice.service.GateService;
 import losky2987.pp2_practice.tools.WithMockOAuth2User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,10 @@ public class AdminControllerTest {
     MockMvc mvc;
     @MockitoBean
     AdminService adminService;
+    @MockitoBean
+    GateService gateService;
+    @MockitoBean
+    FlightService flightService;
 
 
     // this test is only for link /admin
@@ -34,6 +40,7 @@ public class AdminControllerTest {
         long id = 65465493;
         Admin admin = new Admin(null, id);
         when(adminService.findAdminByOauth2Id(id)).thenReturn(admin);
+        when(adminService.isAdminExist(id)).thenReturn(true);
         mvc.perform(get("/admin")).andExpect(view().name("admin"))
         .andExpect(status().is2xxSuccessful());
     }
@@ -46,6 +53,7 @@ public class AdminControllerTest {
         long id = 12345678;
         Admin admin = new Admin(null, id);
         when(adminService.findAdminByOauth2Id(id)).thenReturn(admin);
+        when(adminService.isAdminExist(id)).thenReturn(false);
         mvc.perform(get("/admin")).andExpect(redirectedUrl("/error/NotAdminException"))
                 .andExpect(status().is3xxRedirection());
     }
