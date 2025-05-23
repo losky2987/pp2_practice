@@ -1,12 +1,13 @@
 package losky2987.pp2_practice.controller.dto;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 import java.util.Objects;
 
 public class FlightInfoDTO {
-    private String flightNumber;
+    @NotNull private String flightNumber;
     private String destination;
     @DateTimeFormat(pattern = "HH:mm") private LocalTime departureTime;
     private String gateNumber;

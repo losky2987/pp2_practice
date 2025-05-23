@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class GateInfoDTO {
     @NotNull private String number;
-    @NotNull private Flight flight;
+    private Flight flight;
 
     public GateInfoDTO(String number, Flight flight) {
         this.number = number;

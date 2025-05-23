@@ -49,7 +49,7 @@ public class AdminController {
                 "ui_gates_add", true
         ));
         attributes.put("userId", null);
-        attributes.put("flightInfo", new FlightInfoDTO("", "", LocalTime.of(0,0 ), ""));
+        attributes.put("flightInfoDTO", new FlightInfoDTO("", "", LocalTime.of(0,0 ), ""));
         attributes.putAll(uiAttributes);
         attributes.put("currentFlights",null);
         attributes.put("allFlights",null);
@@ -197,7 +197,7 @@ public class AdminController {
         } else {
             changeAttribute("toastMsg", "Flight not updated");
         }
-        changeAttribute("flightInfo", new FlightInfoDTO("","",LocalTime.of(0,0),""));
+        changeAttribute("flightInfoDTO", new FlightInfoDTO("","",LocalTime.of(0,0),""));
         changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         setUI("ui_flights");
         setFlightsTab("ui_flights_update");

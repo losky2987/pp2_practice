@@ -29,7 +29,7 @@ public class GateDisplayController {
         attributes.put("ui_gates", false);
         attributes.put("ui_gate", false);
         attributes.put("allGates", null);
-        attributes.put("gateInfo", null);
+        attributes.put("gateInfoDTO", null);
     }
 
     private Map<String, Object> getAttributes() {
@@ -51,8 +51,13 @@ public class GateDisplayController {
         }
     }
 
+    public void clearToastMsg() {
+        attributes.put("toastMsg", null);
+    }
+
     @GetMapping("/gate")
     public String gate(Model model) {
+        clearToastMsg();
         if (isFirstTime) {
             initAttributes();
             isFirstTime = false;
@@ -65,12 +70,12 @@ public class GateDisplayController {
 
     @GetMapping("/gate/{number}")
     public String display(@PathVariable("number") String number, Model model) {
+        clearToastMsg();
         if (isFirstTime) {
             initAttributes();
             isFirstTime = false;
         }
-        Gate gate = gateService.findGateByNumber(number);
-        if (gate == null) {
+        if (gateService.findGateByNumber(number) == null) {
             setAttributes("toastMsg", "Gate " + number + " not found");
             setUI("ui_gates");
             return "redirect:/gate";
@@ -81,7 +86,7 @@ public class GateDisplayController {
             setUI("ui_gates");
             return "redirect:/gate";
         }
-        setAttributes("gateInfo", new GateInfoDTO(number, flightService.getNextFlightByGate(number)));
+        setAttributes("gateInfoDTO", new GateInfoDTO(number, flightService.getNextFlightByGate(number)));
         model.addAllAttributes(getAttributes());
         return "gate_display";
     }

@@ -60,7 +60,8 @@ public class GateDisplayControllerTest {
         when(flightService.getNextFlightByGate(gate.getNumber())).thenReturn(flight);
         Model model = mock(Model.class);
         model.addAttribute("gateInfo", new GateInfoDTO(gate.getNumber(), flightService.getNextFlightByGate(gate.getNumber())));
-        mvc.perform(get("/gate/A01")).andExpect(status().isOk());
+        mvc.perform(get("/gate/A01")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("gateInfoDTO"));
     }
 
     @Test
