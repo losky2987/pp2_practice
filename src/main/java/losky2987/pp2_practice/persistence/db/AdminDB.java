@@ -1,4 +1,4 @@
-package losky2987.pp2_practice.db;
+package losky2987.pp2_practice.persistence.db;
 
 import losky2987.pp2_practice.domain.Admin;
 import org.springframework.data.repository.CrudRepository;

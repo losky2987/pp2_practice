@@ -3,8 +3,7 @@ package losky2987.pp2_practice.controller;
 import jakarta.servlet.http.HttpSession;
 import losky2987.pp2_practice.domain.Flight;
 import losky2987.pp2_practice.domain.Gate;
-import losky2987.pp2_practice.dto.FlightInfo;
-import losky2987.pp2_practice.dto.GateInfo;
+import losky2987.pp2_practice.controller.dto.FlightInfoDTO;
 import losky2987.pp2_practice.service.AdminService;
 import losky2987.pp2_practice.service.FlightService;
 import losky2987.pp2_practice.service.GateService;
@@ -50,7 +49,7 @@ public class AdminController {
                 "ui_gates_add", true
         ));
         attributes.put("userId", null);
-        attributes.put("flightInfo", new FlightInfo("", "", LocalTime.of(0,0 ), ""));
+        attributes.put("flightInfo", new FlightInfoDTO("", "", LocalTime.of(0,0 ), ""));
         attributes.putAll(uiAttributes);
         attributes.put("currentFlights",null);
         attributes.put("allFlights",null);
@@ -147,12 +146,12 @@ public class AdminController {
     }
 
     @PostMapping("/admin/flights/add")
-    public String addFlight_post(Model model, HttpSession session, @ModelAttribute FlightInfo flightInfo) {
+    public String addFlight_post(Model model, HttpSession session, @ModelAttribute FlightInfoDTO flightInfoDTO) {
         clearToastMsg();
         if (session.getAttribute("userId") == null) {
             return "redirect:/admin";
         }
-        Flight flight = new Flight(null, flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime(), flightInfo.getGateNumber());
+        Flight flight = new Flight(null, flightInfoDTO.getFlightNumber(), flightInfoDTO.getDestination(), flightInfoDTO.getDepartureTime(), flightInfoDTO.getGateNumber());
         if (flightService.addFlight(flight) != null) {
             changeAttribute("toastMsg", "Flight added");
         }else{
@@ -176,8 +175,8 @@ public class AdminController {
             changeAttribute("toastMsg", "Flight not found");
         } else {
             changeAttribute("toastMsg", "Flight found");
-            FlightInfo flightInfo = new FlightInfo(flight.getNumber(), flight.getDestination(), flight.getDepartureTime(), flight.getGateNumber());
-            changeAttribute("flightInfo", flightInfo);
+            FlightInfoDTO flightInfoDTO = new FlightInfoDTO(flight.getNumber(), flight.getDestination(), flight.getDepartureTime(), flight.getGateNumber());
+            changeAttribute("flightInfo", flightInfoDTO);
         }
         changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         setUI("ui_flights");
@@ -187,18 +186,18 @@ public class AdminController {
     }
 
     @PostMapping("/admin/flights/update")
-    public String updateFlight_post(Model model, HttpSession session, @ModelAttribute FlightInfo flightInfo) {
+    public String updateFlight_post(Model model, HttpSession session, @ModelAttribute FlightInfoDTO flightInfoDTO) {
         if (session.getAttribute("userId") == null) {
             return "redirect:/admin";
         }
-        Flight flight = flightService.findFlightByNumber(flightInfo.getFlightNumber());
-        Flight updatedFlight = new Flight(flight.getId(), flightInfo.getFlightNumber(), flightInfo.getDestination(), flightInfo.getDepartureTime(), flightInfo.getGateNumber());
+        Flight flight = flightService.findFlightByNumber(flightInfoDTO.getFlightNumber());
+        Flight updatedFlight = new Flight(flight.getId(), flightInfoDTO.getFlightNumber(), flightInfoDTO.getDestination(), flightInfoDTO.getDepartureTime(), flightInfoDTO.getGateNumber());
         if (flightService.updateFlight(updatedFlight) != null) {
             changeAttribute("toastMsg", "Flight updated");
         } else {
             changeAttribute("toastMsg", "Flight not updated");
         }
-        changeAttribute("flightInfo", new FlightInfo("","",LocalTime.of(0,0),""));
+        changeAttribute("flightInfo", new FlightInfoDTO("","",LocalTime.of(0,0),""));
         changeAttribute("allFlights", flightService.getAllFlights().stream().sorted(Comparator.comparing(Flight::getDepartureTime)).toList());
         setUI("ui_flights");
         setFlightsTab("ui_flights_update");

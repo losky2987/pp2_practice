@@ -2,8 +2,7 @@ package losky2987.pp2_practice.service;
 
 import losky2987.pp2_practice.domain.Flight;
 import losky2987.pp2_practice.domain.Gate;
-import losky2987.pp2_practice.dto.FlightInfo;
-import losky2987.pp2_practice.repository.FlightRepo;
+import losky2987.pp2_practice.domain.repository.FlightRepo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;

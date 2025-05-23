@@ -1,16 +1,15 @@
-package losky2987.pp2_practice.dto;
+package losky2987.pp2_practice.controller.dto;
 
 import jakarta.validation.constraints.NotNull;
 import losky2987.pp2_practice.domain.Flight;
 
-import java.util.List;
 import java.util.Objects;
 
-public class GateInfo {
+public class GateInfoDTO {
     @NotNull private String number;
     @NotNull private Flight flight;
 
-    public GateInfo(String number, Flight flight) {
+    public GateInfoDTO(String number, Flight flight) {
         this.number = number;
         this.flight = flight;
     }
@@ -34,8 +33,8 @@ public class GateInfo {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        GateInfo gateInfo = (GateInfo) o;
-        return Objects.equals(number, gateInfo.number) && Objects.equals(flight, gateInfo.flight);
+        GateInfoDTO gateInfoDTO = (GateInfoDTO) o;
+        return Objects.equals(number, gateInfoDTO.number) && Objects.equals(flight, gateInfoDTO.flight);
     }
 
     @Override

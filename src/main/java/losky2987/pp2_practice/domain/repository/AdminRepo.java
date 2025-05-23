@@ -1,4 +1,4 @@
-package losky2987.pp2_practice.repository;
+package losky2987.pp2_practice.domain.repository;
 
 import losky2987.pp2_practice.domain.Admin;
 

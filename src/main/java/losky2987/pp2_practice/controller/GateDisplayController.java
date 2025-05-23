@@ -1,18 +1,14 @@
 package losky2987.pp2_practice.controller;
 
-import losky2987.pp2_practice.domain.Flight;
 import losky2987.pp2_practice.domain.Gate;
-import losky2987.pp2_practice.dto.FlightInfo;
-import losky2987.pp2_practice.dto.GateInfo;
+import losky2987.pp2_practice.controller.dto.GateInfoDTO;
 import losky2987.pp2_practice.service.FlightService;
 import losky2987.pp2_practice.service.GateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalTime;
 import java.util.*;
 
 @Controller
@@ -85,7 +81,7 @@ public class GateDisplayController {
             setUI("ui_gates");
             return "redirect:/gate";
         }
-        setAttributes("gateInfo", new GateInfo(number, flightService.getNextFlightByGate(number)));
+        setAttributes("gateInfo", new GateInfoDTO(number, flightService.getNextFlightByGate(number)));
         model.addAllAttributes(getAttributes());
         return "gate_display";
     }

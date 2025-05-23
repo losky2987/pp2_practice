@@ -1,18 +1,17 @@
-package losky2987.pp2_practice.dto;
+package losky2987.pp2_practice.controller.dto;
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class FlightInfo {
+public class FlightInfoDTO {
     private String flightNumber;
     private String destination;
     @DateTimeFormat(pattern = "HH:mm") private LocalTime departureTime;
     private String gateNumber;
 
-    public FlightInfo(String flightNumber, String destination, LocalTime departureTime, String gateNumber) {
+    public FlightInfoDTO(String flightNumber, String destination, LocalTime departureTime, String gateNumber) {
         this.flightNumber = flightNumber;
         this.destination = destination;
         this.departureTime = departureTime;
@@ -54,7 +53,7 @@ public class FlightInfo {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        FlightInfo that = (FlightInfo) o;
+        FlightInfoDTO that = (FlightInfoDTO) o;
         return Objects.equals(flightNumber, that.flightNumber) && Objects.equals(destination, that.destination) && Objects.equals(departureTime, that.departureTime) && Objects.equals(gateNumber, that.gateNumber);
     }
 

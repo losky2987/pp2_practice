@@ -1,7 +1,7 @@
 package losky2987.pp2_practice.service;
 
 import losky2987.pp2_practice.domain.Admin;
-import losky2987.pp2_practice.repository.AdminRepo;
+import losky2987.pp2_practice.domain.repository.AdminRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

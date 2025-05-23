@@ -1,11 +1,12 @@
-package losky2987.pp2_practice.repository;
+package losky2987.pp2_practice.persistence.db;
 
 import losky2987.pp2_practice.domain.Flight;
+import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalTime;
 import java.util.List;
 
-public interface FlightRepo {
+public interface FlightDB extends CrudRepository<Flight, String> {
     List<Flight> findAll();
     Flight save(Flight flight);
     Flight findFlightByNumber(String flightNumber);

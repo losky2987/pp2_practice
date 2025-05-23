@@ -1,8 +1,8 @@
-package losky2987.pp2_practice.repository;
+package losky2987.pp2_practice.persistence.repositoryImpl;
 
-import losky2987.pp2_practice.db.GateDB;
-import losky2987.pp2_practice.domain.Flight;
+import losky2987.pp2_practice.persistence.db.GateDB;
 import losky2987.pp2_practice.domain.Gate;
+import losky2987.pp2_practice.domain.repository.GateRepo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package losky2987.pp2_practice.controller;
 import losky2987.pp2_practice.config.SpringSecurityConfig;
 import losky2987.pp2_practice.domain.Flight;
 import losky2987.pp2_practice.domain.Gate;
-import losky2987.pp2_practice.dto.GateInfo;
+import losky2987.pp2_practice.controller.dto.GateInfoDTO;
 import losky2987.pp2_practice.service.FlightService;
 import losky2987.pp2_practice.service.GateService;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.Model;
@@ -60,7 +59,7 @@ public class GateDisplayControllerTest {
         when(gateService.findGateByNumber(gate.getNumber())).thenReturn(gate);
         when(flightService.getNextFlightByGate(gate.getNumber())).thenReturn(flight);
         Model model = mock(Model.class);
-        model.addAttribute("gateInfo", new GateInfo(gate.getNumber(), flightService.getNextFlightByGate(gate.getNumber())));
+        model.addAttribute("gateInfo", new GateInfoDTO(gate.getNumber(), flightService.getNextFlightByGate(gate.getNumber())));
         mvc.perform(get("/gate/A01")).andExpect(status().isOk());
     }
 

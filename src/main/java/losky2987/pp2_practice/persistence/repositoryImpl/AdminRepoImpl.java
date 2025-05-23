@@ -1,7 +1,8 @@
-package losky2987.pp2_practice.repository;
+package losky2987.pp2_practice.persistence.repositoryImpl;
 
-import losky2987.pp2_practice.db.AdminDB;
+import losky2987.pp2_practice.persistence.db.AdminDB;
 import losky2987.pp2_practice.domain.Admin;
+import losky2987.pp2_practice.domain.repository.AdminRepo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

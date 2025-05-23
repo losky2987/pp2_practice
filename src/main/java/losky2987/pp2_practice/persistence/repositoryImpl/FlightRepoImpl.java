@@ -1,7 +1,8 @@
-package losky2987.pp2_practice.repository;
+package losky2987.pp2_practice.persistence.repositoryImpl;
 
-import losky2987.pp2_practice.db.FlightDB;
+import losky2987.pp2_practice.persistence.db.FlightDB;
 import losky2987.pp2_practice.domain.Flight;
+import losky2987.pp2_practice.domain.repository.FlightRepo;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalTime;

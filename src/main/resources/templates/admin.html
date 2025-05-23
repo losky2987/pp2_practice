@@ -108,17 +108,17 @@
             <div class="tab-pane fade" th:classappend="${ui_flights_update} ? ' show active' : ''" id="updateFlightForm">
                 <form id="searchFlight" method="get" th:action="@{/admin/flights/search}">
                     <label for="flightNumberA">Flight number: </label>
-                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfo != null ? flightInfo.getFlightNumber() : ''}" th:placeholder="${flightInfo.getFlightNumber()}" required>
+                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfoDTO != null ? flightInfoDTO.getFlightNumber() : ''}" th:placeholder="${flightInfoDTO.getFlightNumber()}" required>
                     <button type="submit" class="btn btn-outline-primary">Search</button>
                 </form>
                 <form id="updateFlight" method="post" th:action="@{/admin/flights/update}">
-                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfo != null ? flightInfo.getFlightNumber() : ''}">
+                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfoDTO != null ? flightInfoDTO.getFlightNumber() : ''}">
                     <label for="destination">Destination: </label>
-                    <input type="text" id="destination" name="destination" th:value="${flightInfo != null ? flightInfo.getDestination(): ''}" th:placeholder="${flightInfo != null ? flightInfo.getDestination() : ''}">
+                    <input type="text" id="destination" name="destination" th:value="${flightInfoDTO != null ? flightInfoDTO.getDestination(): ''}" th:placeholder="${flightInfoDTO != null ? flightInfoDTO.getDestination() : ''}">
                     <label for="departureTimeB">Departure Time: </label>
-                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfo != null ? flightInfo.getDepartureTime() : ''}" th:placeholder="${flightInfo != null ? flightInfo.getDepartureTime() : ''}">
+                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfoDTO != null ? flightInfoDTO.getDepartureTime() : ''}" th:placeholder="${flightInfoDTO != null ? flightInfoDTO.getDepartureTime() : ''}">
                     <label for="gateNumberB">Gate: </label>
-                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfo != null ? flightInfo.getGateNumber() : ''}" th:placeholder="${flightInfo != null ? flightInfo.getGateNumber() : ''}">
+                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfoDTO != null ? flightInfoDTO.getGateNumber() : ''}" th:placeholder="${flightInfoDTO != null ? flightInfoDTO.getGateNumber() : ''}">
                     <button type="submit" class="btn btn-outline-primary">Update</button>
                 </form>
             </div>
@@ -175,17 +175,17 @@
 <!--            <div class="tab-pane fade" th:classappend="${ui_gates_update} ? ' show active' : ''" id="updateGateForm">-->
 <!--                <form id="searchFlight" method="post" th:action="@{/admin/flights/search}">-->
 <!--                    <label for="flightNumberA">Flight number: </label>-->
-<!--                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfo.getFlightNumber()}" th:placeholder="${flightInfo.getFlightNumber()}" required>-->
+<!--                    <input type="text" id="flightNumberA" name="flightNumber" th:value="${flightInfoDTO.getFlightNumber()}" th:placeholder="${flightInfoDTO.getFlightNumber()}" required>-->
 <!--                    <button type="submit" class="btn btn-outline-primary">Search</button>-->
 <!--                </form>-->
 <!--                <form id="updateFlight" method="post" th:action="@{/admin/flights/update}">-->
-<!--                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfo.getFlightNumber()}">-->
+<!--                    <input type="hidden" id="hiddenFlightNumber" name="flightNumber" th:value="${flightInfoDTO.getFlightNumber()}">-->
 <!--                    <label for="destination">Destination: </label>-->
-<!--                    <input type="text" id="destination" name="destination" th:value="${flightInfo.getDestination()}" th:placeholder="${flightInfo.getDestination()}">-->
+<!--                    <input type="text" id="destination" name="destination" th:value="${flightInfoDTO.getDestination()}" th:placeholder="${flightInfoDTO.getDestination()}">-->
 <!--                    <label for="departureTimeB">Departure Time: </label>-->
-<!--                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfo.getDepartureTime()}" th:placeholder="${flightInfo.getDepartureTime()}">-->
+<!--                    <input type="time" step="60" id="departureTimeB" name="departureTime" th:value="${flightInfoDTO.getDepartureTime()}" th:placeholder="${flightInfoDTO.getDepartureTime()}">-->
 <!--                    <label for="gateNumberB">Gate: </label>-->
-<!--                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfo.getGateNumber()}" th:placeholder="${flightInfo.getGateNumber()}">-->
+<!--                    <input type="text" id="gateNumberB" name="gateNumber" th:value="${flightInfoDTO.getGateNumber()}" th:placeholder="${flightInfoDTO.getGateNumber()}">-->
 <!--                    <button type="submit" class="btn btn-outline-primary">Update</button>-->
 <!--                </form>-->
 <!--            </div>-->
